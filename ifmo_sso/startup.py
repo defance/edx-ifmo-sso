@@ -6,8 +6,6 @@ import edxmako
 import json
 import logging
 
-import lms.urls as lms_urls
-import cms.urls as cms_urls
 
 log = logging.getLogger(__name__)
 
@@ -49,10 +47,15 @@ def run():
     patch_config()
 
     # Inject urls
-    lms_urls.urlpatterns.insert(0,
-        url(r'', include('ifmo_sso.urls')),
-    )
-    cms_urls.urlpatterns.insert(0,
-        url(r'', include('ifmo_sso.urls_studio')),
-    )
+    try:
+        import lms.urls as lms_urls
+        lms_urls.urlpatterns.insert(0, url(r'', include('ifmo_sso.urls')))
+    except Exception as e:
+        pass
+        
+    try:
+        import cms.urls as cms_urls
+        cms_urls.urlpatterns.insert(0,url(r'', include('ifmo_sso.urls_studio')))
+    except Exception as e:
+        pass
 
