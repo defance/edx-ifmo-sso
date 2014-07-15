@@ -14,7 +14,6 @@ def patch_config():
 
     IFMO_TOKENS_FILE = "ifmo.auth.json"
 
-    IFMO_TOKENS = {}
     try:
         with open(settings.CONFIG_ROOT / IFMO_TOKENS_FILE) as ifmo_conf_file:
             IFMO_TOKENS = json.load(ifmo_conf_file)
@@ -44,7 +43,6 @@ def patch_templates():
 def _patch_variant_url(app_name, urls_module):
     app_urls = __import__('%s.urls' % (app_name,), fromlist=['urlpatterns'])
     app_urls.urlpatterns.insert(0, url(r'', include(urls_module)))
-    log.info('%s successfully urls patched with %s' % (app_name, urls_module))
 
 
 def patch_urls():
