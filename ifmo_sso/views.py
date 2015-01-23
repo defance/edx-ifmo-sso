@@ -33,7 +33,7 @@ def sso_authenticate(request, redirect_on_success='/', redirect_on_failure='/log
 
     def _get_email():
         email = request.POST.get('email')
-        if email == '':
+        if "@" not in email:
             # FIXME: Move to settings
             email = u_ssoid + '@niuitmo.ru'
         return email
