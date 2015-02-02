@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
+from django.views.generic.base import RedirectView
 
 urlpatterns = patterns('',
     # Basic routes
@@ -11,7 +12,7 @@ urlpatterns = patterns('',
     # Override default routes
     url(r'^login$', 'ifmo_sso.views.sso_login'),
     url(r'^logout$', 'ifmo_sso.views.sso_logout'),
-    url(r'^register$', 'ifmo_sso.views.sso_login'),
+    url(r'^register$', RedirectView.as_view(url='https://de.ifmo.ru/IfmoSSO/register')),
     url(r'^accounts/login$', 'ifmo_sso.views.sso_login', name="accounts_login"),
 
     # Legacy login form, FIXME: Fix availability
