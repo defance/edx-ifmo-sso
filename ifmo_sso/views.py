@@ -60,6 +60,14 @@ def sso_authenticate(request, redirect_on_success='/', redirect_on_failure='/log
             u = None
             p = None
 
+    # If user WAS found or new one registered
+    if u is not None:
+        # Update user data
+        u.last_name = request.POST.get('lastname')
+        u.first_name = request.POST.get('firstname')
+        u.email = _get_email()
+        u.save()
+
     if p is not None:
         p.name = '%s %s %s' % (u.last_name, u.first_name, request.POST.get('middlename'))
         p.gender = request.POST.get('gender')
@@ -68,13 +76,7 @@ def sso_authenticate(request, redirect_on_success='/', redirect_on_failure='/log
         # Persisting data
         p.save()
 
-    # If user WAS found or new one registered
-    if u is not None:
-        # Update user data
-        u.last_name = request.POST.get('lastname')
-        u.first_name = request.POST.get('firstname')
-        u.email = _get_email()
-        u.save()
+    if u is not None and p is not None:
         # Dirty hack imitating autheticate(user, hash), see: http://stackoverflow.com/a/2787747
         u.backend = 'django.contrib.auth.backends.ModelBackend'
         login(request, u)
@@ -83,6 +85,7 @@ def sso_authenticate(request, redirect_on_success='/', redirect_on_failure='/log
         # Redirect to login page
         # TODO: Use comprehensive messages
         return redirect(redirect_on_failure)
+
     return redirect(redirect_on_success)
 
 
