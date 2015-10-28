@@ -57,5 +57,5 @@ def run():
 
     patch_templates()
     patch_config()
-    patch_urls()
+    # patch_urls()
 

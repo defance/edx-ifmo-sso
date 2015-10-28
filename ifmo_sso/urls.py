@@ -2,7 +2,9 @@ from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.views.generic.base import RedirectView
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
+
     # Basic routes
     url(r'^ifmo_sso/login', 'ifmo_sso.views.sso_login', name='login'),
     url(r'^ifmo_sso/logout/$', 'ifmo_sso.views.sso_logout', name='logout'),
