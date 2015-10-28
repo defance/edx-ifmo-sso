@@ -71,7 +71,7 @@ def sso_authenticate(request, redirect_on_success='/', redirect_on_failure='/log
     if p is not None:
         p.name = '%s %s %s' % (u.last_name, u.first_name, request.POST.get('middlename'))
         p.gender = request.POST.get('gender')
-        p.year_of_birth = request.POST.get('birthdate').split(' ')[0].split('.')[-1]
+        p.year_of_birth = int(request.POST.get('birthdate').split(' ')[0].split('.')[-1])
         p.country = request.POST.get('countryCode')
         # Persisting data
         p.save()
